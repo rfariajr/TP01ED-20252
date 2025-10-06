@@ -1,10 +1,12 @@
 #include "../include/Objeto.hpp"
 #include <iostream>
 
+//Construtor
 Objeto::Objeto() {
     cabeca = nullptr;
 }
 
+//Destrutor
 Objeto::~Objeto() {
     No* atual = cabeca;
     while(atual != nullptr) {
@@ -13,24 +15,8 @@ Objeto::~Objeto() {
         delete temp;
     }
 }
-/*
-//Contrutror padrão
-Objeto::Objeto() {
-    id = 0;
-    x = -1.0;
-    y = -1.0;
-    largura = 0.0;
-}
 
-//Constrututor
-Objeto::Objeto(int id, double x, double y, double largura) {
-    this -> id;
-    this -> x;
-    this -> y;
-    this -> largura;
-}
-*/
-
+//Inserir no final
 void Objeto::inserir(int id, double x, double y, double largura) {
     No* novoNo = new No;
     novoNo->id = id;
@@ -77,6 +63,63 @@ No* Objeto::procuraObjeto(int id) {
     return nullptr; //Nulo caso não haja o id procurado
 }
 
+No* Objeto::dividir(No* cabeca) {
+    No *l = cabeca, *r = cabeca->proximo;
+
+    while(r != nullptr && r->proximo != nullptr) {
+        l = l->proximo;
+        r = r->proximo->proximo;
+    }
+
+    No* segundaMetade = l->proximo;
+    l->proximo = nullptr; //Devide a lista em duas partes
+    return segundaMetade;
+}
+
+No* Objeto::merge(No* esquerda, No* direita) {
+    No aux;
+    No* atual = &aux;
+
+    aux.proximo = nullptr;
+
+    while(esquerda != nullptr && direita != nullptr) {
+        if(esquerda->y < direita->y || (esquerda->y == direita->y && esquerda->x < direita->x)) {
+            atual->proximo = esquerda;
+            esquerda = esquerda->proximo;
+        }
+        else {
+            atual->proximo = direita;
+            direita = direita->proximo;
+        }
+        atual = atual->proximo;
+    }
+
+    if(esquerda != nullptr) {
+        atual->proximo = esquerda;
+    }
+    else {
+        atual->proximo = direita;
+    }
+
+    return aux.proximo;
+}
+
+No* Objeto::mergeSort(No* cabeca) {
+    if(cabeca == nullptr || cabeca -> proximo == nullptr) {
+        return cabeca; //lista vazia ou com ume elemento
+    }
+
+    //Divide a lista
+    No* segundaMetade = dividir(cabeca);
+
+    //Ordena recursivamente as duas metades
+    cabeca = mergeSort(cabeca);
+    segundaMetade = mergeSort(segundaMetade);
+
+    //Junta as metades ordenadas
+    return merge(cabeca, segundaMetade);
+}
+
 void Objeto::ordenaPorY() {
-    
+    cabeca = mergeSort(cabeca);
 } 

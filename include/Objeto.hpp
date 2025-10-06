@@ -13,9 +13,9 @@ class Objeto {
         No* cabeca;
 
         //Funções para ordenar a lista
-        No* merge(No* esquerda, No* direita);
-        No* mergeSort(No* cabeca);
         No* dividir(No* cabeca);
+        No* merge(No* esquerda, No* direita);
+        No* mergeSort(No* cabeca);        
     public:
         Objeto(); //Construtor padrão
         ~Objeto();
