@@ -1,22 +1,24 @@
 #ifndef CENA_HPP
 #define CENA_HPP
 
-class Trecho;
 class Objeto;
+
+struct Trecho {
+    int id;
+    double inicio, fim;
+    Trecho* proximo;
+};
+
 
 class Cena {
     private:
-        int tempo;
+        int tempo, numObjetos; //
         Trecho* primeiro; //Ponteiro para o primeiro trecho da lista 
-        Objeto* objetos; //Ponteiro para o vetor de Objeto
-        int tamanhoObjetos; //Tamanho do vetor de Objeto
 
     public:        
-        Cena(); //Construtor padrão
-        Cena(int tempo, Objeto* objetos, int tamanhoObjetos);
+        Cena(int tempo, int numObjetos, Objeto* objetos);
         ~Cena(); //Destrutor
-        int menorX(Objeto* objetos, int tamanhoObjetos) const;
-        void adicionaTrecho(); //Adiciona um Trecho a Cena
+        void adicionaTrecho(int numObjetos, Objeto* objetos); //Adiciona um Trecho a Cena
         void imprimeCena(); //Imprime a cena
 
 };

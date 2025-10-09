@@ -10,13 +10,12 @@ struct No {
 
 class Objeto {
     private:
-        No* cabeca;
-
         //Funções para ordenar a lista
         No* dividir(No* cabeca);
         No* merge(No* esquerda, No* direita);
         No* mergeSort(No* cabeca);        
     public:
+        No* cabeca;
         Objeto(); //Construtor padrão
         ~Objeto();
         void inserir(int id, double x, double y, double largura);
